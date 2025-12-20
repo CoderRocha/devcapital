@@ -34,7 +34,7 @@ export default function Home() {
     { name: "Júnior", salary: 4500, years: 2, color: "bg-onp-green-light" },
     { name: "Pleno", salary: 8000, years: 3, color: "bg-primary" },
     { name: "Sênior", salary: 14000, years: 4, color: "bg-onp-green-dark" },
-    { name: "Tech Lead", salary: 17000, years: 5, color: "bg-onp-green-darker" },
+    { name: "Líder", salary: 17000, years: 5, color: "bg-onp-green-darker" },
   ])
 
   const handlePhaseChange = (
@@ -164,7 +164,7 @@ export default function Home() {
 
             <Button
               onClick={handleCalculate}
-              className="w-full h-12 text-base font-semibold"
+              className="w-full h-12 text-base font-semibold cursor-pointer"
               size="lg"
             >
               <Calculator className="size-5 mr-2" />
