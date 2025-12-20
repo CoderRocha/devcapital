@@ -4,7 +4,7 @@ export default {
       extend: {
         colors: {
           primary: {
-            DEFAULT: '#006AFF',
+            DEFAULT: '#5BA32C',
             foreground: '#FFFFFF',
           },
           secondary: {
@@ -12,12 +12,12 @@ export default {
             foreground: '#000000',
           },
           onp: {
-            blue: {
-              DEFAULT: '#006AFF',
-              dark: '#0052CC',
-              darker: '#003D99',
-              light: '#4A90E2',
-              lighter: '#E3F2FD',
+            green: {
+              DEFAULT: '#5BA32C',
+              dark: '#4A8A24',
+              darker: '#3D7220',
+              light: '#7BC04A',
+              lighter: '#E8F5E0',
             },
             gray: {
               dark: '#222222',

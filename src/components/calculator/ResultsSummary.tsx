@@ -22,7 +22,7 @@ export function ResultsSummary({
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-6 bg-onp-blue-lighter rounded-lg border border-onp-blue-light">
+          <div className="p-6 bg-onp-green-lighter rounded-lg border border-onp-green-light">
             <p className="text-sm text-muted-foreground mb-2">Total Guardado</p>
             <p className="text-3xl font-bold text-primary">
               R${" "}
@@ -32,9 +32,9 @@ export function ResultsSummary({
               })}
             </p>
           </div>
-          <div className="p-6 bg-onp-blue-lighter rounded-lg border border-onp-blue-light">
+          <div className="p-6 bg-onp-green-lighter rounded-lg border border-onp-green-light">
             <p className="text-sm text-muted-foreground mb-2">Juros Ganhos</p>
-            <p className="text-3xl font-bold text-onp-blue-dark">
+            <p className="text-3xl font-bold text-onp-green-dark">
               R${" "}
               {totalEarned.toLocaleString("pt-BR", {
                 minimumFractionDigits: 2,

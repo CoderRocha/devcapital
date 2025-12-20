@@ -17,10 +17,10 @@ interface CareerPhasesConfigProps {
 }
 
 const defaultPhases: CareerPhase[] = [
-  { name: "Júnior", salary: 4500, years: 2, color: "bg-onp-blue-light" },
+  { name: "Júnior", salary: 4500, years: 2, color: "bg-onp-green-light" },
   { name: "Pleno", salary: 8000, years: 3, color: "bg-primary" },
-  { name: "Sênior", salary: 14000, years: 4, color: "bg-onp-blue-dark" },
-  { name: "Tech Lead", salary: 17000, years: 5, color: "bg-onp-blue-darker" },
+  { name: "Sênior", salary: 14000, years: 4, color: "bg-onp-green-dark" },
+  { name: "Tech Lead", salary: 17000, years: 5, color: "bg-onp-green-darker" },
 ]
 
 export function CareerPhasesConfig({

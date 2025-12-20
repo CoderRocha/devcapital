@@ -18,10 +18,10 @@ interface TimelineProps {
 const defaultPhases: PhaseResult[] = []
 
 const phaseColors = {
-  junior: "bg-onp-blue-light",
+  junior: "bg-onp-green-light",
   pleno: "bg-primary",
-  senior: "bg-onp-blue-dark",
-  "tech-lead": "bg-onp-blue-darker",
+  senior: "bg-onp-green-dark",
+  "tech-lead": "bg-onp-green-darker",
 }
 
 export function Timeline({ phases = defaultPhases }: TimelineProps) {
@@ -34,7 +34,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
       <h2 className="text-2xl font-bold text-foreground">Timeline da Carreira</h2>
 
       <div className="relative">
-        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-onp-blue-lighter" />
+        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-onp-green-lighter" />
 
         <div className="space-y-8">
           {phases.map((result, index) => {

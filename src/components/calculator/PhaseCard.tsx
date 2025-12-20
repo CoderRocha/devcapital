@@ -17,17 +17,17 @@ interface PhaseCardProps {
 }
 
 const phaseColors = {
-  junior: "bg-onp-blue-light",
+  junior: "bg-onp-green-light",
   pleno: "bg-primary",
-  senior: "bg-onp-blue-dark",
-  "tech-lead": "bg-onp-blue-darker",
+  senior: "bg-onp-green-dark",
+  "tech-lead": "bg-onp-green-darker",
 }
 
 const phaseTextColors = {
-  junior: "text-onp-blue-light",
+  junior: "text-onp-green-light",
   pleno: "text-primary",
-  senior: "text-onp-blue-dark",
-  "tech-lead": "text-onp-blue-darker",
+  senior: "text-onp-green-dark",
+  "tech-lead": "text-onp-green-darker",
 }
 
 export function PhaseCard({
