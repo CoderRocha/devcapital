@@ -62,9 +62,6 @@ export function InitialDepositInput({
             className="text-base"
             placeholder="0,00"
           />
-          <p className="text-xs text-muted-foreground">
-            Este valor será o ponto de partida para o cálculo de juros compostos
-          </p>
         </div>
       </CardContent>
     </Card>
