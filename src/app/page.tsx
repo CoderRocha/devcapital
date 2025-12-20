@@ -1,65 +1,193 @@
-import Image from "next/image";
+"use client"
+
+import { useState, useMemo } from "react"
+import { Header } from "@/components/layout/Header"
+import { CalculatorHeader } from "@/components/calculator/CalculatorHeader"
+import { InterestRateSelector } from "@/components/calculator/InterestRateSelector"
+import { SavingsPercentageInput } from "@/components/calculator/SavingsPercentageInput"
+import { CareerPhasesConfig, type CareerPhase } from "@/components/calculator/CareerPhasesConfig"
+import { ResultsSummary } from "@/components/calculator/ResultsSummary"
+import { Timeline } from "@/components/calculator/Timeline"
+import { Button } from "@/components/ui/button"
+import { Calculator } from "lucide-react"
+
+type RateType = "annual" | "monthly"
+
+interface PhaseResult {
+  phase: CareerPhase
+  startYear: number
+  endYear: number
+  monthlySavings: number
+  totalSavedInPhase: number
+  accumulatedAtEnd: number
+}
 
 export default function Home() {
+  const [rateType, setRateType] = useState<RateType>("annual")
+  const [interestRate, setInterestRate] = useState(10)
+  const [savingsPercentage, setSavingsPercentage] = useState(30)
+  const [calculated, setCalculated] = useState(false)
+
+  const [phases, setPhases] = useState<CareerPhase[]>([
+    { name: "Júnior", salary: 4500, years: 2, color: "bg-onp-blue-light" },
+    { name: "Pleno", salary: 8000, years: 3, color: "bg-primary" },
+    { name: "Sênior", salary: 14000, years: 4, color: "bg-onp-blue-dark" },
+    { name: "Tech Lead", salary: 17000, years: 5, color: "bg-onp-blue-darker" },
+  ])
+
+  const handlePhaseChange = (
+    index: number,
+    field: keyof CareerPhase,
+    value: number
+  ) => {
+    const updated = [...phases]
+    updated[index] = { ...updated[index], [field]: value }
+    setPhases(updated)
+    setCalculated(false)
+  }
+
+  // Função para calcular juros compostos mensais
+  const calculateCompoundInterest = (
+    principal: number,
+    monthlyDeposit: number,
+    monthlyRate: number,
+    months: number
+  ): number => {
+    let amount = principal
+    
+    for (let i = 0; i < months; i++) {
+      amount = amount * (1 + monthlyRate) + monthlyDeposit
+    }
+    
+    return amount
+  }
+
+  // Calcular resultados quando o botão for clicado
+  const results = useMemo(() => {
+    if (!calculated) return []
+
+    const phaseResults: PhaseResult[] = []
+    let accumulated = 0
+    let currentYear = 0
+
+    // Converter taxa anual para mensal (se necessário)
+    const monthlyRate = rateType === "annual" 
+      ? interestRate / 100 / 12 
+      : interestRate / 100
+
+    phases.forEach((phase) => {
+      const monthlySavings = (phase.salary * savingsPercentage) / 100
+      const months = phase.years * 12
+      
+      // Calcular quanto foi guardado nesta fase (sem juros)
+      const totalSavedInPhase = monthlySavings * months
+      
+      // Calcular acumulado ao final da fase (com juros compostos)
+      accumulated = calculateCompoundInterest(
+        accumulated,
+        monthlySavings,
+        monthlyRate,
+        months
+      )
+
+      phaseResults.push({
+        phase,
+        monthlySavings,
+        totalSavedInPhase,
+        accumulatedAtEnd: accumulated,
+        startYear: currentYear,
+        endYear: currentYear + phase.years,
+      })
+
+      currentYear += phase.years
+    })
+
+    return phaseResults
+  }, [phases, interestRate, savingsPercentage, rateType, calculated])
+
+  const totalSaved = results.reduce((sum, r) => sum + r.totalSavedInPhase, 0)
+  const finalAmount = results[results.length - 1]?.accumulatedAtEnd || 0
+  const totalEarned = finalAmount - totalSaved
+
+  const handleCalculate = () => {
+    setCalculated(true)
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <div className="min-h-screen bg-white">
+      <Header />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <CalculatorHeader />
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+          
+          {/* Painel de Configurações */}
+          
+          <div className="lg:col-span-1 space-y-6">
+            <InterestRateSelector
+              rateType={rateType}
+              onRateTypeChange={(type) => {
+                setRateType(type)
+                setCalculated(false)
+              }}
+              interestRate={interestRate}
+              onInterestRateChange={(rate) => {
+                setInterestRate(rate)
+                setCalculated(false)
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            <SavingsPercentageInput
+              savingsPercentage={savingsPercentage}
+              onSavingsPercentageChange={(percentage) => {
+                setSavingsPercentage(percentage)
+                setCalculated(false)
+              }}
+            />
+
+            <CareerPhasesConfig
+              phases={phases}
+              onPhaseChange={handlePhaseChange}
+            />
+
+            {/* Botão de Calcular */}
+
+            <Button
+              onClick={handleCalculate}
+              className="w-full h-12 text-base font-semibold"
+              size="lg"
+            >
+              <Calculator className="size-5 mr-2" />
+              Calcular
+            </Button>
+          </div>
+
+          {/* Resultados */}
+          
+          <div className="lg:col-span-2 space-y-8">
+            {calculated ? (
+              <>
+                <ResultsSummary
+                  totalSaved={totalSaved}
+                  totalEarned={totalEarned}
+                  finalAmount={finalAmount}
+                />
+
+                <Timeline phases={results} />
+              </>
+            ) : (
+              <div className="flex items-center justify-center h-96 bg-muted/30 rounded-lg border-2 border-dashed border-border">
+                <div className="text-center">
+                  <Calculator className="size-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-lg font-medium text-muted-foreground">
+                    Configure os valores e clique em "Calcular" para ver os resultados
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-      </main>
+      </div>
     </div>
-  );
+  )
 }
