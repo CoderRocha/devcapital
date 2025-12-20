@@ -4,6 +4,7 @@ import { useState, useMemo } from "react"
 import { Header } from "@/components/layout/Header"
 import { CalculatorHeader } from "@/components/calculator/CalculatorHeader"
 import { InterestRateSelector } from "@/components/calculator/InterestRateSelector"
+import { InitialDepositInput } from "@/components/calculator/InitialDepositInput"
 import { SavingsPercentageInput } from "@/components/calculator/SavingsPercentageInput"
 import { CareerPhasesConfig, type CareerPhase } from "@/components/calculator/CareerPhasesConfig"
 import { ResultsSummary } from "@/components/calculator/ResultsSummary"
@@ -25,6 +26,7 @@ interface PhaseResult {
 export default function Home() {
   const [rateType, setRateType] = useState<RateType>("annual")
   const [interestRate, setInterestRate] = useState(10)
+  const [initialDeposit, setInitialDeposit] = useState(0)
   const [savingsPercentage, setSavingsPercentage] = useState(30)
   const [calculated, setCalculated] = useState(false)
 
@@ -67,7 +69,7 @@ export default function Home() {
     if (!calculated) return []
 
     const phaseResults: PhaseResult[] = []
-    let accumulated = 0
+    let accumulated = initialDeposit
     let currentYear = 0
 
     // Converter taxa anual para mensal (se necessário)
@@ -103,9 +105,9 @@ export default function Home() {
     })
 
     return phaseResults
-  }, [phases, interestRate, savingsPercentage, rateType, calculated])
+  }, [phases, interestRate, savingsPercentage, rateType, calculated, initialDeposit])
 
-  const totalSaved = results.reduce((sum, r) => sum + r.totalSavedInPhase, 0)
+  const totalSaved = initialDeposit + results.reduce((sum, r) => sum + r.totalSavedInPhase, 0)
   const finalAmount = results[results.length - 1]?.accumulatedAtEnd || 0
   const totalEarned = finalAmount - totalSaved
 
@@ -133,6 +135,14 @@ export default function Home() {
               interestRate={interestRate}
               onInterestRateChange={(rate) => {
                 setInterestRate(rate)
+                setCalculated(false)
+              }}
+            />
+
+            <InitialDepositInput
+              initialDeposit={initialDeposit}
+              onInitialDepositChange={(value) => {
+                setInitialDeposit(value)
                 setCalculated(false)
               }}
             />
