@@ -61,14 +61,12 @@ export function PhaseCard({
   return (
     <Card className="border-l-4 hover:shadow-md transition-shadow duration-200" style={{ borderLeftColor: config.color }}>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <Icon className="size-4" style={{ color: config.color }} />
-              <Badge className="text-white border-0" style={{ backgroundColor: config.color }}>
-                {phase.name}
-              </Badge>
-            </div>
+        <div className="flex items-center justify-center">
+          <div className="flex items-center gap-2">
+            <Icon className="size-4" style={{ color: config.color }} />
+            <Badge className="text-white border-0" style={{ backgroundColor: config.color }}>
+              {phase.name}
+            </Badge>
           </div>
         </div>
       </CardHeader>
