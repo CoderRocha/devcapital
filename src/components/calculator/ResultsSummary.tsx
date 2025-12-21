@@ -19,10 +19,7 @@ export function ResultsSummary({
   
   return (
     <Card 
-      className="border-2 border-primary shadow-lg"
-      style={{
-        background: "linear-gradient(to bottom right, white, rgba(232, 245, 224, 0.3))"
-      }}
+      className="border-2 border-primary shadow-lg bg-card"
     >
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-2xl">
@@ -35,7 +32,7 @@ export function ResultsSummary({
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div 
-            className="p-6 bg-white rounded-lg border-2 shadow-sm hover:shadow-md transition-shadow"
+            className="p-6 bg-card rounded-lg border-2 shadow-sm hover:shadow-md transition-shadow"
             style={{ borderColor: "#7BC04A" }}
           >
             <p className="text-sm font-medium text-muted-foreground mb-3">
@@ -46,7 +43,7 @@ export function ResultsSummary({
             </p>
           </div>
           <div 
-            className="p-6 bg-white rounded-lg border-2 shadow-sm hover:shadow-md transition-shadow"
+            className="p-6 bg-card rounded-lg border-2 shadow-sm hover:shadow-md transition-shadow"
             style={{ borderColor: "#7BC04A" }}
           >
             <p className="text-sm font-medium text-muted-foreground mb-3">

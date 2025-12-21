@@ -1,10 +1,11 @@
 import Image from "next/image"
 import logo from "@/app/assets/devcapital-logo.png"
 import { LanguageSwitch } from "./LanguageSwitch"
+import { ThemeToggle } from "./ThemeToggle"
 
 export function Header() {
   return (
-    <header className="h-16 border-b border-border bg-white flex items-center justify-between px-6">
+    <header className="h-16 border-b border-border bg-background flex items-center justify-between px-6">
       <div className="flex items-center gap-3">
         <Image
           src={logo}
@@ -17,7 +18,10 @@ export function Header() {
           Dev Capital
         </div>
       </div>
-      <LanguageSwitch />
+      <div className="flex items-center gap-3">
+        <ThemeToggle />
+        <LanguageSwitch />
+      </div>
     </header>
   )
 }
