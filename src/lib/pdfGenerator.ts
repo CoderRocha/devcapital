@@ -1,9 +1,11 @@
 import jsPDF from "jspdf"
+import { translations, translatePhaseName, formatCurrency, type Language } from "@/contexts/LanguageContext"
 
 interface PDFData {
   totalSaved: number
   totalEarned: number
   finalAmount: number
+  language?: Language
   phases?: Array<{
     name: string
     startYear: number
@@ -16,6 +18,22 @@ interface PDFData {
 }
 
 export function generatePDF(data: PDFData) {
+  const language: Language = (data.language === "en" || data.language === "pt") 
+    ? data.language 
+    : "pt"
+  
+  const t = (key: string, params?: Record<string, string | number>): string => {
+    
+    const langTranslations = translations[language] || translations.pt
+    let text = langTranslations[key as keyof typeof translations.pt] || key
+    
+    if (params) {
+      Object.entries(params).forEach(([paramKey, value]) => {
+        text = text.replace(`{${paramKey}}`, String(value))
+      })
+    }
+    return text
+  }
   const doc = new jsPDF()
   const pageWidth = doc.internal.pageSize.getWidth()
   const pageHeight = doc.internal.pageSize.getHeight()
@@ -29,7 +47,7 @@ export function generatePDF(data: PDFData) {
   doc.setFontSize(24)
   doc.setTextColor(primaryColor)
   doc.setFont("helvetica", "bold")
-  doc.text("Planejamento Financeiro para Devs", pageWidth / 2, yPosition, {
+  doc.text(t("pdf.title"), pageWidth / 2, yPosition, {
     align: "center",
   })
   yPosition += 15
@@ -37,14 +55,14 @@ export function generatePDF(data: PDFData) {
   doc.setFontSize(10)
   doc.setTextColor(100, 100, 100)
   doc.setFont("helvetica", "normal")
-  const date = new Date().toLocaleDateString("pt-BR", {
+  const date = new Date().toLocaleDateString(language === "pt" ? "pt-BR" : "en-US", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
   })
-  doc.text(`Gerado em: ${date}`, pageWidth / 2, yPosition, {
+  doc.text(t("pdf.generated", { date }), pageWidth / 2, yPosition, {
     align: "center",
   })
   yPosition += 20
@@ -53,7 +71,7 @@ export function generatePDF(data: PDFData) {
     doc.setFontSize(18)
     doc.setTextColor(primaryColor)
     doc.setFont("helvetica", "bold")
-    doc.text("Timeline da Carreira", margin, yPosition)
+    doc.text(t("timeline.title"), margin, yPosition)
     yPosition += 15
 
     data.phases.forEach((phase, index) => {
@@ -62,17 +80,23 @@ export function generatePDF(data: PDFData) {
         yPosition = margin
       }
 
+      const translatedPhaseName = translatePhaseName(phase.name, language)
+      
       doc.setFontSize(14)
       doc.setTextColor(0, 0, 0)
       doc.setFont("helvetica", "bold")
-      doc.text(`${phase.name}`, margin, yPosition)
+      doc.text(translatedPhaseName, margin, yPosition)
       yPosition += 8
 
       doc.setFontSize(10)
       doc.setTextColor(100, 100, 100)
       doc.setFont("helvetica", "normal")
       doc.text(
-        `Anos ${phase.startYear} - ${phase.endYear} (${phase.endYear - phase.startYear} anos)`,
+        t("timeline.years", {
+          start: phase.startYear,
+          end: phase.endYear,
+          duration: phase.endYear - phase.startYear,
+        }),
         margin,
         yPosition
       )
@@ -80,22 +104,20 @@ export function generatePDF(data: PDFData) {
 
       doc.setFontSize(9)
       doc.setTextColor(0, 0, 0)
-      doc.text(`Salário: R$ ${phase.salary.toLocaleString("pt-BR")}`, margin, yPosition)
-      yPosition += 6
       doc.text(
-        `Guardado/Mês: R$ ${phase.monthlySavings.toLocaleString("pt-BR", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}`,
+        `${t("timeline.salary")}: ${formatCurrency(phase.salary, language)}`,
         margin,
         yPosition
       )
       yPosition += 6
       doc.text(
-        `Total Guardado: R$ ${phase.totalSavedInPhase.toLocaleString("pt-BR", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}`,
+        `${t("timeline.monthly.saved")}: ${formatCurrency(phase.monthlySavings, language)}`,
+        margin,
+        yPosition
+      )
+      yPosition += 6
+      doc.text(
+        `${t("timeline.total.saved")}: ${formatCurrency(phase.totalSavedInPhase, language)}`,
         margin,
         yPosition
       )
@@ -103,10 +125,7 @@ export function generatePDF(data: PDFData) {
       doc.setFont("helvetica", "bold")
       doc.setTextColor(primaryColor)
       doc.text(
-        `Acumulado ao Final: R$ ${phase.accumulatedAtEnd.toLocaleString("pt-BR", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}`,
+        `${t("timeline.accumulated")}: ${formatCurrency(phase.accumulatedAtEnd, language)}`,
         margin,
         yPosition
       )
@@ -131,7 +150,7 @@ export function generatePDF(data: PDFData) {
   doc.setFontSize(18)
   doc.setTextColor(primaryColor)
   doc.setFont("helvetica", "bold")
-  doc.text("Resultado Final", margin, yPosition)
+  doc.text(t("results.final"), margin, yPosition)
   yPosition += 15
 
   const cardWidth = (pageWidth - margin * 2 - 10) / 3
@@ -147,15 +166,12 @@ export function generatePDF(data: PDFData) {
   doc.setFontSize(10)
   doc.setTextColor(100, 100, 100)
   doc.setFont("helvetica", "normal")
-  doc.text("Total Guardado", margin + 5, cardY + 8)
+  doc.text(t("results.total.saved"), margin + 5, cardY + 8)
 
   doc.setFontSize(16)
   doc.setTextColor(primaryColor)
   doc.setFont("helvetica", "bold")
-  const totalSavedText = `R$ ${data.totalSaved.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`
+  const totalSavedText = formatCurrency(data.totalSaved, language)
   doc.text(totalSavedText, margin + 5, cardY + 20)
 
   const card2X = margin + cardWidth + 5
@@ -167,15 +183,12 @@ export function generatePDF(data: PDFData) {
   doc.setFontSize(10)
   doc.setTextColor(100, 100, 100)
   doc.setFont("helvetica", "normal")
-  doc.text("Juros Ganhos", card2X + 5, cardY + 8)
+  doc.text(t("results.earned"), card2X + 5, cardY + 8)
 
   doc.setFontSize(16)
   doc.setTextColor(darkGreen)
   doc.setFont("helvetica", "bold")
-  const totalEarnedText = `R$ ${data.totalEarned.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`
+  const totalEarnedText = formatCurrency(data.totalEarned, language)
   doc.text(totalEarnedText, card2X + 5, cardY + 20)
 
   const card3X = card2X + cardWidth + 5
@@ -188,24 +201,22 @@ export function generatePDF(data: PDFData) {
   doc.setFontSize(10)
   doc.setTextColor(100, 100, 100)
   doc.setFont("helvetica", "normal")
-  doc.text("Valor Final", card3X + 5, cardY + 8)
+  doc.text(t("results.final.amount"), card3X + 5, cardY + 8)
 
   doc.setFontSize(16)
   doc.setTextColor(primaryColor)
   doc.setFont("helvetica", "bold")
-  const finalAmountText = `R$ ${data.finalAmount.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`
+  const finalAmountText = formatCurrency(data.finalAmount, language)
   doc.text(finalAmountText, card3X + 5, cardY + 20)
 
   const footerY = pageHeight - 15
   doc.setFontSize(8)
   doc.setTextColor(150, 150, 150)
   doc.setFont("helvetica", "normal")
-  doc.text("Dev Capital - Calculadora de Juros Compostos", pageWidth / 2, footerY, {
+  doc.text(t("pdf.footer"), pageWidth / 2, footerY, {
     align: "center",
   })
 
-  doc.save("Planejamento Financeiro para Devs.pdf")
+  const filename = t("pdf.filename") + ".pdf"
+  doc.save(filename)
 }

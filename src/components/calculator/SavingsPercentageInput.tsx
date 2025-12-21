@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { Wallet } from "lucide-react"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 interface SavingsPercentageInputProps {
   savingsPercentage?: number
@@ -15,6 +16,7 @@ export function SavingsPercentageInput({
   savingsPercentage: controlledSavingsPercentage = 30,
   onSavingsPercentageChange,
 }: SavingsPercentageInputProps) {
+  const { t } = useLanguage()
   const [internalSavingsPercentage, setInternalSavingsPercentage] = useState(30)
 
   const savingsPercentage =
@@ -33,17 +35,17 @@ export function SavingsPercentageInput({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Wallet className="size-5 text-primary" />
-          Percentual de Economia
+          {t("savings.percentage")}
         </CardTitle>
         <CardDescription>
-          Quanto você pretende guardar do seu salário
+          {t("savings.percentage.description")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium text-foreground">
-              Percentual
+              {t("savings.percentage.label")}
             </label>
             <span className="text-2xl font-bold text-primary">
               {savingsPercentage}%

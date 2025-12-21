@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { GraduationCap, Briefcase, Award, Crown } from "lucide-react"
+import { useLanguage, translatePhaseName } from "@/contexts/LanguageContext"
 
 interface CareerPhase {
   name: string
@@ -42,6 +43,7 @@ export function PhaseCard({
   onPhaseChange,
   isEditable = true,
 }: PhaseCardProps) {
+  const { t, language } = useLanguage()
   const normalizedName = phase.name
     .toLowerCase()
     .normalize("NFD")
@@ -57,6 +59,7 @@ export function PhaseCard({
 
   const config = phaseConfig[phaseKey] || phaseConfig.pleno
   const Icon = config.icon
+  const translatedPhaseName = translatePhaseName(phase.name, language)
 
   return (
     <Card className="border-l-4 hover:shadow-md transition-shadow duration-200" style={{ borderLeftColor: config.color }}>
@@ -65,7 +68,7 @@ export function PhaseCard({
           <div className="flex items-center gap-2">
             <Icon className="size-4" style={{ color: config.color }} />
             <Badge className="text-white border-0" style={{ backgroundColor: config.color }}>
-              {phase.name}
+              {translatedPhaseName}
             </Badge>
           </div>
         </div>
@@ -73,7 +76,7 @@ export function PhaseCard({
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <label className="text-xs font-medium text-muted-foreground">
-            Salário Mensal (R$)
+            {t("phase.salary")}
           </label>
           <Input
             type="number"
@@ -89,7 +92,7 @@ export function PhaseCard({
         </div>
         <div className="space-y-2">
           <label className="text-xs font-medium text-muted-foreground">
-            Duração (anos)
+            {t("phase.years")}
           </label>
           <Input
             type="number"

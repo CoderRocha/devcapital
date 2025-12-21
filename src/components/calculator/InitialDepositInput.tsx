@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { PiggyBank } from "lucide-react"
+import { useLanguage, formatCurrency } from "@/contexts/LanguageContext"
 
 interface InitialDepositInputProps {
   initialDeposit?: number
@@ -14,6 +15,7 @@ export function InitialDepositInput({
   initialDeposit: controlledInitialDeposit = 0,
   onInitialDepositChange,
 }: InitialDepositInputProps) {
+  const { t, language } = useLanguage()
   const [internalInitialDeposit, setInternalInitialDeposit] = useState(0)
 
   const initialDeposit =
@@ -33,24 +35,20 @@ export function InitialDepositInput({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <PiggyBank className="size-5 text-primary" />
-          Aporte Inicial
+          {t("initial.deposit")}
         </CardTitle>
         <CardDescription>
-          Valor inicial que você já possui para investir
+          {t("initial.deposit.description")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium text-foreground">
-              Valor Inicial
+              {t("initial.deposit.label")}
             </label>
             <span className="text-xl font-bold text-primary">
-              R${" "}
-              {initialDeposit.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+              {formatCurrency(initialDeposit, language)}
             </span>
           </div>
           <Input

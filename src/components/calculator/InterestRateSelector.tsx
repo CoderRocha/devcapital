@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { Percent } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 type RateType = "annual" | "monthly"
 
@@ -22,6 +23,7 @@ export function InterestRateSelector({
   interestRate: controlledInterestRate = 10,
   onInterestRateChange,
 }: InterestRateSelectorProps) {
+  const { t } = useLanguage()
   const [internalRateType, setInternalRateType] = useState<RateType>("annual")
   const [internalInterestRate, setInternalInterestRate] = useState(10)
 
@@ -52,10 +54,10 @@ export function InterestRateSelector({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Percent className="size-5 text-primary" />
-          Taxa de Juros
+          {t("interest.rate")}
         </CardTitle>
         <CardDescription>
-          Selecione o tipo e ajuste a taxa de juros
+          {t("interest.rate.description")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -73,7 +75,7 @@ export function InterestRateSelector({
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
-            Anual
+            {t("interest.annual")}
           </button>
           <button
             type="button"
@@ -85,7 +87,7 @@ export function InterestRateSelector({
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
-            Mensal
+            {t("interest.monthly")}
           </button>
         </div>
 
@@ -94,7 +96,7 @@ export function InterestRateSelector({
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium text-foreground">
-              Taxa de Juros {rateType === "annual" ? "Anual" : "Mensal"}
+              {t("interest.rate.label", { type: rateType === "annual" ? t("interest.annual") : t("interest.monthly") })}
             </label>
             <span className="text-lg font-semibold text-primary">
               {interestRate}%

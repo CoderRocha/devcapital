@@ -1,6 +1,9 @@
+"use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { CareerPhase } from "./CareerPhasesConfig"
 import { GraduationCap, Briefcase, Award, Crown } from "lucide-react"
+import { useLanguage, translatePhaseName, formatCurrency } from "@/contexts/LanguageContext"
 
 export interface PhaseResult {
   phase: CareerPhase
@@ -41,13 +44,15 @@ const phaseConfig = {
 }
 
 export function Timeline({ phases = defaultPhases }: TimelineProps) {
+  const { t, language } = useLanguage()
+  
   if (!phases || phases.length === 0) {
     return null
   }
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground">Timeline da Carreira</h2>
+      <h2 className="text-2xl font-bold text-foreground">{t("timeline.title")}</h2>
 
       <div className="space-y-6">
         {phases.map((result, index) => {
@@ -66,6 +71,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
 
           const config = phaseConfig[phaseKey] || phaseConfig.pleno
           const Icon = config.icon
+          const translatedPhaseName = translatePhaseName(result.phase.name, language)
 
           return (
             <Card
@@ -83,7 +89,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                 >
                   <Icon className="size-8 mb-2" />
                   <span className="text-xs font-semibold text-center leading-tight">
-                    {config.label}
+                    {translatedPhaseName}
                   </span>
                 </div>
 
@@ -94,18 +100,20 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                     <div className="flex items-center justify-between flex-wrap gap-4">
                       <div>
                         <CardTitle className="text-xl mb-1">
-                          {result.phase.name}
+                          {translatedPhaseName}
                         </CardTitle>
                         <CardDescription>
-                          Anos {result.startYear} - {result.endYear} (
-                          {result.phase.years} anos)
+                          {t("timeline.years", { 
+                            start: result.startYear, 
+                            end: result.endYear, 
+                            duration: result.phase.years 
+                          })}
                         </CardDescription>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm text-muted-foreground">Salário</p>
+                        <p className="text-sm text-muted-foreground">{t("timeline.salary")}</p>
                         <p className="text-xl font-semibold text-foreground">
-                          R${" "}
-                          {result.phase.salary.toLocaleString("pt-BR")}
+                          {formatCurrency(result.phase.salary, language)}
                         </p>
                       </div>
                     </div>
@@ -114,38 +122,26 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="p-4 bg-muted rounded-lg">
                         <p className="text-xs text-muted-foreground mb-1">
-                          Guardado/Mês
+                          {t("timeline.monthly.saved")}
                         </p>
                         <p className="text-lg font-semibold text-foreground">
-                          R${" "}
-                          {result.monthlySavings.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
+                          {formatCurrency(result.monthlySavings, language)}
                         </p>
                       </div>
                       <div className="p-4 bg-muted rounded-lg">
                         <p className="text-xs text-muted-foreground mb-1">
-                          Total Guardado
+                          {t("timeline.total.saved")}
                         </p>
                         <p className="text-lg font-semibold text-foreground">
-                          R${" "}
-                          {result.totalSavedInPhase.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
+                          {formatCurrency(result.totalSavedInPhase, language)}
                         </p>
                       </div>
                       <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
                         <p className="text-xs text-muted-foreground mb-1">
-                          Acumulado ao Final
+                          {t("timeline.accumulated")}
                         </p>
                         <p className="text-lg font-semibold text-primary">
-                          R${" "}
-                          {result.accumulatedAtEnd.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
+                          {formatCurrency(result.accumulatedAtEnd, language)}
                         </p>
                       </div>
                     </div>

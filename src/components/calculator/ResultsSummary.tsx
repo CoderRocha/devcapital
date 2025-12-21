@@ -1,5 +1,8 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TrendingUp } from "lucide-react"
+import { useLanguage, formatCurrency } from "@/contexts/LanguageContext"
 
 interface ResultsSummaryProps {
   totalSaved?: number
@@ -12,6 +15,8 @@ export function ResultsSummary({
   totalEarned = 0,
   finalAmount = 0,
 }: ResultsSummaryProps) {
+  const { t, language } = useLanguage()
+  
   return (
     <Card 
       className="border-2 border-primary shadow-lg"
@@ -24,7 +29,7 @@ export function ResultsSummary({
           <div className="p-2 bg-primary/10 rounded-lg">
             <TrendingUp className="size-6 text-primary" />
           </div>
-          <span>Resultado Final</span>
+          <span>{t("results.final")}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -34,14 +39,10 @@ export function ResultsSummary({
             style={{ borderColor: "#7BC04A" }}
           >
             <p className="text-sm font-medium text-muted-foreground mb-3">
-              Total Guardado
+              {t("results.total.saved")}
             </p>
             <p className="text-3xl font-bold text-primary">
-              R${" "}
-              {totalSaved.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+              {formatCurrency(totalSaved, language)}
             </p>
           </div>
           <div 
@@ -49,26 +50,18 @@ export function ResultsSummary({
             style={{ borderColor: "#7BC04A" }}
           >
             <p className="text-sm font-medium text-muted-foreground mb-3">
-              Juros Ganhos
+              {t("results.earned")}
             </p>
             <p className="text-3xl font-bold" style={{ color: "#4A8A24" }}>
-              R${" "}
-              {totalEarned.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+              {formatCurrency(totalEarned, language)}
             </p>
           </div>
           <div className="p-6 bg-primary/10 rounded-lg border-2 border-primary shadow-md">
             <p className="text-sm font-medium text-muted-foreground mb-3">
-              Valor Final
+              {t("results.final.amount")}
             </p>
             <p className="text-3xl font-bold text-primary">
-              R${" "}
-              {finalAmount.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+              {formatCurrency(finalAmount, language)}
             </p>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar } from "lucide-react"
 import { PhaseCard } from "./PhaseCard"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export interface CareerPhase {
   name: string
@@ -27,15 +28,17 @@ export function CareerPhasesConfig({
   phases = defaultPhases,
   onPhaseChange,
 }: CareerPhasesConfigProps) {
+  const { t } = useLanguage()
+  
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calendar className="size-5 text-primary" />
-          Fases da Carreira
+          {t("career.phases")}
         </CardTitle>
         <CardDescription>
-          Configure salário e duração de cada fase
+          {t("career.phases.description")}
         </CardDescription>
       </CardHeader>
       <CardContent>

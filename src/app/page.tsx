@@ -12,6 +12,7 @@ import { Timeline } from "@/components/calculator/Timeline"
 import { Button } from "@/components/ui/button"
 import { Calculator, Download } from "lucide-react"
 import { generatePDF } from "@/lib/pdfGenerator"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 type RateType = "annual" | "monthly"
 
@@ -25,6 +26,7 @@ interface PhaseResult {
 }
 
 export default function Home() {
+  const { t, language } = useLanguage()
   const [rateType, setRateType] = useState<RateType>("annual")
   const [interestRate, setInterestRate] = useState(10)
   const [initialDeposit, setInitialDeposit] = useState(0)
@@ -121,6 +123,7 @@ export default function Home() {
       totalSaved,
       totalEarned,
       finalAmount,
+      language,
       phases: results.map((p) => ({
         name: p.phase.name,
         startYear: p.startYear,
@@ -187,7 +190,7 @@ export default function Home() {
               size="lg"
             >
               <Calculator className="size-5 mr-2" />
-              Calcular
+              {t("calculate")}
             </Button>
           </div>
 
@@ -212,7 +215,7 @@ export default function Home() {
                   size="lg"
                 >
                   <Download className="size-5 mr-2" />
-                  Baixar
+                  {t("download")}
                 </Button>
               </>
             ) : (
@@ -220,7 +223,7 @@ export default function Home() {
                 <div className="text-center">
                   <Calculator className="size-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-lg font-medium text-muted-foreground">
-                    Preencha os valores e clique em 'Calcular' visualizar os resultados
+                    {t("placeholder.message")}
                   </p>
                 </div>
               </div>
