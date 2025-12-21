@@ -70,10 +70,10 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
           return (
             <Card
               key={index}
-              className="hover:shadow-lg transition-all duration-200 overflow-hidden border-l-4"
+              className="hover:shadow-lg transition-all duration-200 overflow-hidden border-l-4 p-0"
               style={{ borderLeftColor: config.color }}
             >
-              <div className="flex">
+              <div className="flex min-h-full">
 
                 {/* Barra colorida lateral com ícone */}
 
