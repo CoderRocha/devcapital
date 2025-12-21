@@ -39,16 +39,16 @@ export function LanguageSwitch() {
 
       <button
         onClick={toggleLanguage}
-        className="relative w-12 h-6 rounded-full bg-muted border-2 border-border transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 cursor-pointer"
+        className="relative w-12 h-6 rounded-full border-2 border-border transition-colors ring-2 ring-primary ring-offset-2 cursor-pointer flex items-center"
+        style={{ backgroundColor: '#5BA32C' }}
         aria-label={isEnglish ? "Switch to Portuguese" : "Switch to English"}
         role="switch"
         aria-checked={isEnglish}
       >
         {/* Thumb do switch */}
-
         <span
-          className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ease-in-out ${
-            isEnglish ? "translate-x-[22px]" : "translate-x-0"
+          className={`absolute left-1 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-200 ease-in-out ${
+            isEnglish ? "translate-x-6" : "translate-x-0"
           }`}
         />
       </button>
