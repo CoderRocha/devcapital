@@ -10,7 +10,8 @@ import { CareerPhasesConfig, type CareerPhase } from "@/components/calculator/Ca
 import { ResultsSummary } from "@/components/calculator/ResultsSummary"
 import { Timeline } from "@/components/calculator/Timeline"
 import { Button } from "@/components/ui/button"
-import { Calculator } from "lucide-react"
+import { Calculator, Download } from "lucide-react"
+import { generatePDF } from "@/lib/pdfGenerator"
 
 type RateType = "annual" | "monthly"
 
@@ -115,6 +116,24 @@ export default function Home() {
     setCalculated(true)
   }
 
+  const handleDownloadPDF = () => {
+    const pdfData = {
+      totalSaved,
+      totalEarned,
+      finalAmount,
+      phases: results.map((p) => ({
+        name: p.phase.name,
+        startYear: p.startYear,
+        endYear: p.endYear,
+        monthlySavings: p.monthlySavings,
+        totalSavedInPhase: p.totalSavedInPhase,
+        accumulatedAtEnd: p.accumulatedAtEnd,
+        salary: p.phase.salary,
+      })),
+    }
+    generatePDF(pdfData)
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -184,6 +203,17 @@ export default function Home() {
                   totalEarned={totalEarned}
                   finalAmount={finalAmount}
                 />
+
+                {/* Botão de Baixar PDF */}
+
+                <Button
+                  onClick={handleDownloadPDF}
+                  className="w-full h-12 text-base font-semibold cursor-pointer"
+                  size="lg"
+                >
+                  <Download className="size-5 mr-2" />
+                  Baixar
+                </Button>
               </>
             ) : (
               <div className="flex items-center justify-center h-96 bg-muted/30 rounded-lg border-2 border-dashed border-border">
