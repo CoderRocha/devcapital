@@ -1,7 +1,9 @@
 "use client"
 
 import { useLanguage } from "@/contexts/LanguageContext"
-import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import brFlag from "@/app/assets/br-flag.png"
+import usFlag from "@/app/assets/us-flag.png"
 
 export function LanguageSwitch() {
   const { language, setLanguage } = useLanguage()
@@ -10,20 +12,64 @@ export function LanguageSwitch() {
     setLanguage(language === "pt" ? "en" : "pt")
   }
 
+  const isEnglish = language === "en"
+
   return (
-    <Button
-      onClick={toggleLanguage}
-      variant="ghost"
-      size="icon"
-      className="gap-2 px-3"
-      aria-label={language === "pt" ? "Switch to English" : "Mudar para Português"}
-    >
-      {language === "pt" ? (
-        <span className="text-2xl">🇧🇷</span>
-      ) : (
-        <span className="text-2xl">🇺🇸</span>
-      )}
-    </Button>
+    <div className="flex items-center gap-3">
+
+      {/* Bandeira BR */}
+
+      <button
+        onClick={() => setLanguage("pt")}
+        className={`flex items-center justify-center transition-opacity cursor-pointer ${
+          !isEnglish ? "opacity-100" : "opacity-50 hover:opacity-75"
+        }`}
+        aria-label="Português"
+      >
+        <Image
+          src={brFlag}
+          alt="Bandeira do Brasil"
+          width={24}
+          height={16}
+          className="rounded-sm"
+        />
+      </button>
+
+      {/* Switch Toggle */}
+
+      <button
+        onClick={toggleLanguage}
+        className="relative w-12 h-6 rounded-full bg-muted border-2 border-border transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 cursor-pointer"
+        aria-label={isEnglish ? "Switch to Portuguese" : "Switch to English"}
+        role="switch"
+        aria-checked={isEnglish}
+      >
+        {/* Thumb do switch */}
+
+        <span
+          className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ease-in-out ${
+            isEnglish ? "translate-x-[22px]" : "translate-x-0"
+          }`}
+        />
+      </button>
+
+      {/* Bandeira EUA */}
+      <button
+        onClick={() => setLanguage("en")}
+        className={`flex items-center justify-center transition-opacity cursor-pointer ${
+          isEnglish ? "opacity-100" : "opacity-50 hover:opacity-75"
+        }`}
+        aria-label="English"
+      >
+        <Image
+          src={usFlag}
+          alt="USA Flag"
+          width={24}
+          height={16}
+          className="rounded-sm"
+        />
+      </button>
+    </div>
   )
 }
 
