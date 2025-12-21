@@ -68,13 +68,14 @@ export function generatePDF(data: PDFData) {
   yPosition += 20
 
   if (data.phases && data.phases.length > 0) {
+    const phases = data.phases
     doc.setFontSize(18)
     doc.setTextColor(primaryColor)
     doc.setFont("helvetica", "bold")
     doc.text(t("timeline.title"), margin, yPosition)
     yPosition += 15
 
-    data.phases.forEach((phase, index) => {
+    phases.forEach((phase, index) => {
       if (yPosition > pageHeight - 50) {
         doc.addPage()
         yPosition = margin
@@ -131,7 +132,7 @@ export function generatePDF(data: PDFData) {
       )
       yPosition += 15
 
-      if (index < data.phases.length - 1) {
+      if (index < phases.length - 1) {
         doc.setDrawColor(200, 200, 200)
         doc.setLineWidth(0.5)
         doc.line(margin, yPosition, pageWidth - margin, yPosition)
