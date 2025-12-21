@@ -190,7 +190,7 @@ export default function Home() {
                 <div className="text-center">
                   <Calculator className="size-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-lg font-medium text-muted-foreground">
-                    Configure os valores e clique em "Calcular" para ver os resultados
+                    Preencha os valores e clique em 'Calcular' visualizar os resultados
                   </p>
                 </div>
               </div>
