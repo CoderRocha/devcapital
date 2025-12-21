@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { CareerPhase } from "./CareerPhasesConfig"
+import { GraduationCap, Briefcase, Award, Crown } from "lucide-react"
 
 export interface PhaseResult {
   phase: CareerPhase
@@ -17,11 +17,27 @@ interface TimelineProps {
 
 const defaultPhases: PhaseResult[] = []
 
-const phaseColors = {
-  junior: "bg-onp-green-light",
-  pleno: "bg-primary",
-  senior: "bg-onp-green-dark",
-  "tech-lead": "bg-onp-green-darker",
+const phaseConfig = {
+  junior: {
+    color: "#7BC04A",
+    icon: GraduationCap,
+    label: "Júnior",
+  },
+  pleno: {
+    color: "#5BA32C",
+    icon: Briefcase,
+    label: "Pleno",
+  },
+  senior: {
+    color: "#4A8A24",
+    icon: Award,
+    label: "Sênior",
+  },
+  lider: {
+    color: "#3D7220",
+    icon: Crown,
+    label: "Líder",
+  },
 }
 
 export function Timeline({ phases = defaultPhases }: TimelineProps) {
@@ -33,35 +49,52 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-foreground">Timeline da Carreira</h2>
 
-      <div className="relative">
-        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-onp-green-lighter" />
+      <div className="space-y-6">
+        {phases.map((result, index) => {
+          const normalizedName = result.phase.name
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace("tech lead", "lider")
+            .replace("tech-lead", "lider")
+          
+          const phaseKey = normalizedName as
+            | "junior"
+            | "pleno"
+            | "senior"
+            | "lider"
 
-        <div className="space-y-8">
-          {phases.map((result, index) => {
-            const phaseKey = result.phase.name
-              .toLowerCase()
-              .replace(" ", "-") as
-              | "junior"
-              | "pleno"
-              | "senior"
-              | "tech-lead"
+          const config = phaseConfig[phaseKey] || phaseConfig.pleno
+          const Icon = config.icon
 
-            const bgColor = phaseColors[phaseKey] || "bg-primary"
+          return (
+            <Card
+              key={index}
+              className="hover:shadow-lg transition-all duration-200 overflow-hidden border-l-4"
+              style={{ borderLeftColor: config.color }}
+            >
+              <div className="flex">
 
-            return (
-              <div key={index} className="relative pl-20">
+                {/* Barra colorida lateral com ícone */}
+
                 <div
-                  className={`absolute left-6 top-6 size-4 rounded-full border-4 border-white ${bgColor} shadow-sm`}
-                />
+                  className="w-20 flex flex-col items-center justify-center p-4 text-white shrink-0"
+                  style={{ backgroundColor: config.color }}
+                >
+                  <Icon className="size-8 mb-2" />
+                  <span className="text-xs font-semibold text-center leading-tight">
+                    {config.label}
+                  </span>
+                </div>
 
-                <Card className="hover:shadow-md transition-shadow duration-200">
+                {/* Conteúdo do card */}
+                
+                <div className="flex-1">
                   <CardHeader>
                     <div className="flex items-center justify-between flex-wrap gap-4">
                       <div>
-                        <CardTitle className="flex items-center gap-2 mb-2">
-                          <Badge className={`${bgColor} text-white border-0`}>
-                            {result.phase.name}
-                          </Badge>
+                        <CardTitle className="text-xl mb-1">
+                          {result.phase.name}
                         </CardTitle>
                         <CardDescription>
                           Anos {result.startYear} - {result.endYear} (
@@ -85,7 +118,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                         </p>
                         <p className="text-lg font-semibold text-foreground">
                           R${" "}
-                          {(result.monthlySavings || 0).toLocaleString("pt-BR", {
+                          {result.monthlySavings.toLocaleString("pt-BR", {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
@@ -97,7 +130,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                         </p>
                         <p className="text-lg font-semibold text-foreground">
                           R${" "}
-                          {(result.totalSavedInPhase || 0).toLocaleString("pt-BR", {
+                          {result.totalSavedInPhase.toLocaleString("pt-BR", {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
@@ -109,7 +142,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                         </p>
                         <p className="text-lg font-semibold text-primary">
                           R${" "}
-                          {(result.accumulatedAtEnd || 0).toLocaleString("pt-BR", {
+                          {result.accumulatedAtEnd.toLocaleString("pt-BR", {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
@@ -117,11 +150,11 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                       </div>
                     </div>
                   </CardContent>
-                </Card>
+                </div>
               </div>
-            )
-          })}
-        </div>
+            </Card>
+          )
+        })}
       </div>
     </div>
   )

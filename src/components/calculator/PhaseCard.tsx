@@ -1,6 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import { GraduationCap, Briefcase, Award, Crown } from "lucide-react"
 
 interface CareerPhase {
   name: string
@@ -16,18 +17,23 @@ interface PhaseCardProps {
   isEditable?: boolean
 }
 
-const phaseColors = {
-  junior: "bg-onp-green-light",
-  pleno: "bg-primary",
-  senior: "bg-onp-green-dark",
-  "tech-lead": "bg-onp-green-darker",
-}
-
-const phaseTextColors = {
-  junior: "text-onp-green-light",
-  pleno: "text-primary",
-  senior: "text-onp-green-dark",
-  "tech-lead": "text-onp-green-darker",
+const phaseConfig = {
+  junior: {
+    color: "#7BC04A",
+    icon: GraduationCap,
+  },
+  pleno: {
+    color: "#5BA32C",
+    icon: Briefcase,
+  },
+  senior: {
+    color: "#4A8A24",
+    icon: Award,
+  },
+  lider: {
+    color: "#3D7220",
+    icon: Crown,
+  },
 }
 
 export function PhaseCard({
@@ -36,23 +42,33 @@ export function PhaseCard({
   onPhaseChange,
   isEditable = true,
 }: PhaseCardProps) {
-  const phaseKey = phase.name.toLowerCase().replace(" ", "-") as
+  const normalizedName = phase.name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace("tech lead", "lider")
+    .replace("tech-lead", "lider")
+  
+  const phaseKey = normalizedName as
     | "junior"
     | "pleno"
     | "senior"
-    | "tech-lead"
+    | "lider"
 
-  const bgColor = phaseColors[phaseKey] || "bg-primary"
-  const textColor = phaseTextColors[phaseKey] || "text-primary"
+  const config = phaseConfig[phaseKey] || phaseConfig.pleno
+  const Icon = config.icon
 
   return (
-    <Card className="border-l-4 border-l-primary hover:shadow-md transition-shadow duration-200">
+    <Card className="border-l-4 hover:shadow-md transition-shadow duration-200" style={{ borderLeftColor: config.color }}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Badge className={`${bgColor} text-white border-0`}>
-              {phase.name}
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Icon className="size-4" style={{ color: config.color }} />
+              <Badge className="text-white border-0" style={{ backgroundColor: config.color }}>
+                {phase.name}
+              </Badge>
+            </div>
           </div>
         </div>
       </CardHeader>
