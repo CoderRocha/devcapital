@@ -74,17 +74,17 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
           const translatedPhaseName = translatePhaseName(result.phase.name, language)
 
           return (
-            <Card
+            <div
               key={index}
-              className="hover:shadow-lg transition-all duration-200 border-l-4 p-0"
-              style={{ borderLeftColor: config.color }}
+              className="hover:shadow-lg transition-all duration-200 rounded-lg overflow-hidden border-2"
+              style={{ borderColor: config.color }}
             >
               <div className="flex min-h-full">
 
                 {/* Barra colorida lateral com ícone */}
 
                 <div
-                  className="w-20 flex flex-col items-center justify-center p-4 text-white shrink-0 rounded-l-lg"
+                  className="w-20 flex flex-col items-center justify-center p-4 text-white shrink-0"
                   style={{ backgroundColor: config.color }}
                 >
                   <Icon className="size-8 mb-2" />
@@ -95,7 +95,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
 
                 {/* Conteúdo do card */}
                 
-                <div className="flex-1">
+                <div className="flex-1 bg-card">
                   <CardHeader className="px-6 py-6">
                     <div className="flex items-center justify-between flex-wrap gap-4">
                       <div>
@@ -148,7 +148,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                   </CardContent>
                 </div>
               </div>
-            </Card>
+            </div>
           )
         })}
       </div>
