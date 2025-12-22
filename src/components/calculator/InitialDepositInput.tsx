@@ -44,10 +44,10 @@ export function InitialDepositInput({
       <CardContent className="space-y-4">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-foreground">
+            <label className="text-xs sm:text-sm font-medium text-foreground">
               {t("initial.deposit.label")}
             </label>
-            <span className="text-xl font-bold text-primary">
+            <span className="text-lg sm:text-xl font-bold text-primary break-all text-right ml-2">
               {formatCurrency(initialDeposit, language)}
             </span>
           </div>

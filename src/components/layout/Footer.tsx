@@ -7,16 +7,16 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border bg-background py-6 mt-auto">
+    <footer className="border-t border-border bg-background py-4 sm:py-6 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-center gap-2 text-center">
-          <p className="text-sm font-semibold text-foreground">
+        <div className="flex flex-col items-center justify-center gap-1.5 sm:gap-2 text-center">
+          <p className="text-xs sm:text-sm font-semibold text-foreground">
             Dev Capital
           </p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] sm:text-xs text-muted-foreground px-2">
             {t("footer.copyright", { year: currentYear })}
           </p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] sm:text-xs text-muted-foreground px-2">
             {t("footer.name")}{" "}
             <a 
               href="https://github.com/coderrocha" 

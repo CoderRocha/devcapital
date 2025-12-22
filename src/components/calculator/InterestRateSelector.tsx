@@ -64,12 +64,12 @@ export function InterestRateSelector({
 
         {/* Toggle Anual/Mensal */}
         
-        <div className="flex gap-2 p-1 bg-muted rounded-lg">
+        <div className="flex gap-1.5 sm:gap-2 p-1 bg-muted rounded-lg">
           <button
             type="button"
             onClick={() => handleRateTypeChange("annual")}
             className={cn(
-              "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer",
+              "flex-1 py-1.5 sm:py-2 px-3 sm:px-4 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer",
               rateType === "annual"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
@@ -81,7 +81,7 @@ export function InterestRateSelector({
             type="button"
             onClick={() => handleRateTypeChange("monthly")}
             className={cn(
-              "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer",
+              "flex-1 py-1.5 sm:py-2 px-3 sm:px-4 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer",
               rateType === "monthly"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
@@ -95,10 +95,10 @@ export function InterestRateSelector({
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-foreground">
+            <label className="text-xs sm:text-sm font-medium text-foreground">
               {t("interest.rate.label", { type: rateType === "annual" ? t("interest.annual") : t("interest.monthly") })}
             </label>
-            <span className="text-lg font-semibold text-primary">
+            <span className="text-base sm:text-lg font-semibold text-primary">
               {interestRate}%
             </span>
           </div>

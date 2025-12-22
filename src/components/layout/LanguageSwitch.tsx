@@ -15,7 +15,7 @@ export function LanguageSwitch() {
   const isEnglish = language === "en"
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-1.5 sm:gap-3">
 
       {/* Bandeira BR */}
 
@@ -31,7 +31,7 @@ export function LanguageSwitch() {
           alt="Bandeira do Brasil"
           width={24}
           height={16}
-          className="rounded-sm"
+          className="rounded-sm w-5 h-3.5 sm:w-6 sm:h-4"
         />
       </button>
 
@@ -39,7 +39,7 @@ export function LanguageSwitch() {
 
       <button
         onClick={toggleLanguage}
-        className="relative w-12 h-6 rounded-full border-2 border-border transition-colors ring-2 ring-primary ring-offset-2 cursor-pointer flex items-center"
+        className="relative w-10 h-5 sm:w-12 sm:h-6 rounded-full border-2 border-border transition-colors ring-1 sm:ring-2 ring-primary ring-offset-1 sm:ring-offset-2 cursor-pointer flex items-center"
         style={{ backgroundColor: '#5BA32C' }}
         aria-label={isEnglish ? "Switch to Portuguese" : "Switch to English"}
         role="switch"
@@ -47,8 +47,8 @@ export function LanguageSwitch() {
       >
         {/* Thumb do switch */}
         <span
-          className={`absolute left-1 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-200 ease-in-out ${
-            isEnglish ? "translate-x-6" : "translate-x-0"
+          className={`absolute left-0.5 sm:left-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-white rounded-full shadow-sm transition-transform duration-200 ease-in-out ${
+            isEnglish ? "translate-x-5 sm:translate-x-6" : "translate-x-0"
           }`}
         />
       </button>
@@ -66,7 +66,7 @@ export function LanguageSwitch() {
           alt="USA Flag"
           width={24}
           height={16}
-          className="rounded-sm"
+          className="rounded-sm w-5 h-3.5 sm:w-6 sm:h-4"
         />
       </button>
     </div>

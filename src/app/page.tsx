@@ -157,10 +157,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         <CalculatorHeader />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mt-6 sm:mt-8 lg:mt-12">
           
           {/* Painel de Configurações */}
           
@@ -212,10 +212,10 @@ export default function Home() {
             <div className="animate-fade-in-up-delay-3">
               <Button
                 onClick={handleCalculate}
-                className="w-full h-12 text-base font-semibold cursor-pointer"
+                className="w-full h-11 sm:h-12 text-sm sm:text-base font-semibold cursor-pointer"
                 size="lg"
               >
-                <Calculator className="size-5 mr-2" />
+                <Calculator className="size-4 sm:size-5 mr-2" />
                 {t("calculate")}
               </Button>
             </div>
@@ -243,19 +243,19 @@ export default function Home() {
                 <div className="animate-fade-in-up-delay-2">
                   <Button
                     onClick={handleDownloadPDF}
-                    className="w-full h-12 text-base font-semibold cursor-pointer"
+                    className="w-full h-11 sm:h-12 text-sm sm:text-base font-semibold cursor-pointer"
                     size="lg"
                   >
-                    <Download className="size-5 mr-2" />
+                    <Download className="size-4 sm:size-5 mr-2" />
                     {t("download")}
                   </Button>
                 </div>
               </>
             ) : (
-              <div className="flex items-center justify-center h-96 bg-muted/30 rounded-lg border-2 border-dashed border-border">
-                <div className="text-center">
-                  <Calculator className="size-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-lg font-medium text-muted-foreground">
+              <div className="flex items-center justify-center h-64 sm:h-96 bg-muted/30 rounded-lg border-2 border-dashed border-border">
+                <div className="text-center px-4">
+                  <Calculator className="size-8 sm:size-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+                  <p className="text-sm sm:text-base lg:text-lg font-medium text-muted-foreground">
                     {t("placeholder.message")}
                   </p>
                 </div>

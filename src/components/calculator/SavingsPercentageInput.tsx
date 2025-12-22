@@ -44,10 +44,10 @@ export function SavingsPercentageInput({
       <CardContent className="space-y-4">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-foreground">
+            <label className="text-xs sm:text-sm font-medium text-foreground">
               {t("savings.percentage.label")}
             </label>
-            <span className="text-2xl font-bold text-primary">
+            <span className="text-xl sm:text-2xl font-bold text-primary">
               {savingsPercentage}%
             </span>
           </div>
