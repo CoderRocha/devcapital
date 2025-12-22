@@ -244,11 +244,19 @@ export function generatePDF(data: PDFData) {
     doc.text(line, card3X + 5, cardY + 20 + (index * 6))
   })
 
-  const footerY = pageHeight - 15
+  const footerY = pageHeight - 20
   doc.setFontSize(8)
   doc.setTextColor(150, 150, 150)
   doc.setFont("helvetica", "normal")
   doc.text(t("pdf.footer"), pageWidth / 2, footerY, {
+    align: "center",
+  })
+
+  const copyrightY = pageHeight - 15
+  doc.setFontSize(7)
+  doc.setTextColor(150, 150, 150)
+  doc.setFont("helvetica", "normal")
+  doc.text(t("pdf.copyright"), pageWidth / 2, copyrightY, {
     align: "center",
   })
 

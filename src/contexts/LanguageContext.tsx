@@ -48,8 +48,9 @@ export const translations = {
     "phase.senior": "Sênior",
     "phase.lider": "Tech Lead",
     "pdf.title": "Planejamento Financeiro para Devs",
-    "pdf.generated": "Gerado em: {date}",
-    "pdf.footer": "Dev Capital - Calculadora de Juros Compostos",
+    "pdf.generated": "Relatório gerado em: {date}",
+    "pdf.footer": "Dev Capital - Calculadora de Juros Compostos para Devs",
+    "pdf.copyright": "Criado por Guilherme Rocha (github.com/coderrocha)",
     "pdf.filename": "Planejamento Financeiro para Devs",
   },
   en: {
@@ -89,8 +90,9 @@ export const translations = {
     "phase.senior": "Senior",
     "phase.lider": "Tech Lead",
     "pdf.title": "Financial Planning for Devs",
-    "pdf.generated": "Generated on: {date}",
-    "pdf.footer": "Dev Capital - Compound Interest Calculator",
+    "pdf.generated": "Report generated on: {date}",
+    "pdf.footer": "Dev Capital - Compound Interest Calculator for Devs",
+    "pdf.copyright": "Created by Guilherme Rocha (github.com/coderrocha)",
     "pdf.filename": "Financial Planning for Devs",
   },
 }
