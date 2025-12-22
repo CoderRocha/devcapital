@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { Header } from "@/components/layout/Header"
+import { Footer } from "@/components/layout/Footer"
 import { CalculatorHeader } from "@/components/calculator/CalculatorHeader"
 import { InterestRateSelector } from "@/components/calculator/InterestRateSelector"
 import { InitialDepositInput } from "@/components/calculator/InitialDepositInput"
@@ -263,6 +264,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
