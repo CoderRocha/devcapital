@@ -148,50 +148,60 @@ export default function Home() {
           {/* Painel de Configurações */}
           
           <div className="lg:col-span-1 space-y-6">
-            <InterestRateSelector
-              rateType={rateType}
-              onRateTypeChange={(type) => {
-                setRateType(type)
-                setCalculated(false)
-              }}
-              interestRate={interestRate}
-              onInterestRateChange={(rate) => {
-                setInterestRate(rate)
-                setCalculated(false)
-              }}
-            />
+            <div className="animate-fade-in-up-delay-2">
+              <InterestRateSelector
+                rateType={rateType}
+                onRateTypeChange={(type) => {
+                  setRateType(type)
+                  setCalculated(false)
+                }}
+                interestRate={interestRate}
+                onInterestRateChange={(rate) => {
+                  setInterestRate(rate)
+                  setCalculated(false)
+                }}
+              />
+            </div>
 
-            <InitialDepositInput
-              initialDeposit={initialDeposit}
-              onInitialDepositChange={(value) => {
-                setInitialDeposit(value)
-                setCalculated(false)
-              }}
-            />
+            <div className="animate-fade-in-up-delay-2">
+              <InitialDepositInput
+                initialDeposit={initialDeposit}
+                onInitialDepositChange={(value) => {
+                  setInitialDeposit(value)
+                  setCalculated(false)
+                }}
+              />
+            </div>
 
-            <SavingsPercentageInput
-              savingsPercentage={savingsPercentage}
-              onSavingsPercentageChange={(percentage) => {
-                setSavingsPercentage(percentage)
-                setCalculated(false)
-              }}
-            />
+            <div className="animate-fade-in-up-delay-2">
+              <SavingsPercentageInput
+                savingsPercentage={savingsPercentage}
+                onSavingsPercentageChange={(percentage) => {
+                  setSavingsPercentage(percentage)
+                  setCalculated(false)
+                }}
+              />
+            </div>
 
-            <CareerPhasesConfig
-              phases={phases}
-              onPhaseChange={handlePhaseChange}
-            />
+            <div className="animate-fade-in-up-delay-3">
+              <CareerPhasesConfig
+                phases={phases}
+                onPhaseChange={handlePhaseChange}
+              />
+            </div>
 
             {/* Botão de Calcular */}
 
-            <Button
-              onClick={handleCalculate}
-              className="w-full h-12 text-base font-semibold cursor-pointer"
-              size="lg"
-            >
-              <Calculator className="size-5 mr-2" />
-              {t("calculate")}
-            </Button>
+            <div className="animate-fade-in-up-delay-3">
+              <Button
+                onClick={handleCalculate}
+                className="w-full h-12 text-base font-semibold cursor-pointer"
+                size="lg"
+              >
+                <Calculator className="size-5 mr-2" />
+                {t("calculate")}
+              </Button>
+            </div>
           </div>
 
           {/* Resultados */}
@@ -199,24 +209,30 @@ export default function Home() {
           <div className="lg:col-span-2 space-y-8">
             {calculated ? (
               <>
-                <Timeline phases={results} />
+                <div className="animate-fade-in-up">
+                  <Timeline phases={results} />
+                </div>
 
-                <ResultsSummary
-                  totalSaved={totalSaved}
-                  totalEarned={totalEarned}
-                  finalAmount={finalAmount}
-                />
+                <div className="animate-fade-in-up-delay-1">
+                  <ResultsSummary
+                    totalSaved={totalSaved}
+                    totalEarned={totalEarned}
+                    finalAmount={finalAmount}
+                  />
+                </div>
 
                 {/* Botão de Baixar PDF */}
 
-                <Button
-                  onClick={handleDownloadPDF}
-                  className="w-full h-12 text-base font-semibold cursor-pointer"
-                  size="lg"
-                >
-                  <Download className="size-5 mr-2" />
-                  {t("download")}
-                </Button>
+                <div className="animate-fade-in-up-delay-2">
+                  <Button
+                    onClick={handleDownloadPDF}
+                    className="w-full h-12 text-base font-semibold cursor-pointer"
+                    size="lg"
+                  >
+                    <Download className="size-5 mr-2" />
+                    {t("download")}
+                  </Button>
+                </div>
               </>
             ) : (
               <div className="flex items-center justify-center h-96 bg-muted/30 rounded-lg border-2 border-dashed border-border">
