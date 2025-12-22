@@ -158,6 +158,31 @@ export function generatePDF(data: PDFData) {
   const cardHeight = 40
   const cardY = yPosition
 
+  const splitTextToFit = (text: string, maxWidth: number, fontSize: number): string[] => {
+    doc.setFontSize(fontSize)
+    const words = text.split(' ')
+    const lines: string[] = []
+    let currentLine = ''
+    
+    for (const word of words) {
+      const testLine = currentLine ? `${currentLine} ${word}` : word
+      const width = doc.getTextWidth(testLine)
+      
+      if (width > maxWidth && currentLine) {
+        lines.push(currentLine)
+        currentLine = word
+      } else {
+        currentLine = testLine
+      }
+    }
+    
+    if (currentLine) {
+      lines.push(currentLine)
+    }
+    
+    return lines
+  }
+
   doc.setFillColor(255, 255, 255)
   doc.roundedRect(margin, cardY, cardWidth, cardHeight, 3, 3, "FD")
   doc.setDrawColor(123, 192, 74)
@@ -169,11 +194,14 @@ export function generatePDF(data: PDFData) {
   doc.setFont("helvetica", "normal")
   doc.text(t("results.total.saved"), margin + 5, cardY + 8)
 
-  doc.setFontSize(16)
+  doc.setFontSize(14)
   doc.setTextColor(primaryColor)
   doc.setFont("helvetica", "bold")
   const totalSavedText = formatCurrency(data.totalSaved, language)
-  doc.text(totalSavedText, margin + 5, cardY + 20)
+  const totalSavedLines = splitTextToFit(totalSavedText, cardWidth - 10, 14)
+  totalSavedLines.forEach((line, index) => {
+    doc.text(line, margin + 5, cardY + 20 + (index * 6))
+  })
 
   const card2X = margin + cardWidth + 5
   doc.setFillColor(255, 255, 255)
@@ -186,11 +214,14 @@ export function generatePDF(data: PDFData) {
   doc.setFont("helvetica", "normal")
   doc.text(t("results.earned"), card2X + 5, cardY + 8)
 
-  doc.setFontSize(16)
+  doc.setFontSize(14)
   doc.setTextColor(darkGreen)
   doc.setFont("helvetica", "bold")
   const totalEarnedText = formatCurrency(data.totalEarned, language)
-  doc.text(totalEarnedText, card2X + 5, cardY + 20)
+  const totalEarnedLines = splitTextToFit(totalEarnedText, cardWidth - 10, 14)
+  totalEarnedLines.forEach((line, index) => {
+    doc.text(line, card2X + 5, cardY + 20 + (index * 6))
+  })
 
   const card3X = card2X + cardWidth + 5
   doc.setFillColor(232, 245, 224)
@@ -204,11 +235,14 @@ export function generatePDF(data: PDFData) {
   doc.setFont("helvetica", "normal")
   doc.text(t("results.final.amount"), card3X + 5, cardY + 8)
 
-  doc.setFontSize(16)
+  doc.setFontSize(14)
   doc.setTextColor(primaryColor)
   doc.setFont("helvetica", "bold")
   const finalAmountText = formatCurrency(data.finalAmount, language)
-  doc.text(finalAmountText, card3X + 5, cardY + 20)
+  const finalAmountLines = splitTextToFit(finalAmountText, cardWidth - 10, 14)
+  finalAmountLines.forEach((line, index) => {
+    doc.text(line, card3X + 5, cardY + 20 + (index * 6))
+  })
 
   const footerY = pageHeight - 15
   doc.setFontSize(8)

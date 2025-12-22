@@ -52,7 +52,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground">{t("timeline.title")}</h2>
+      <h2 className="text-2xl font-bold text-foreground text-center">{t("timeline.title")}</h2>
 
       <div className="space-y-6">
         {phases.map((result, index) => {
@@ -112,7 +112,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                       </div>
                       <div className="text-right">
                         <p className="text-sm text-muted-foreground">{t("timeline.salary")}</p>
-                        <p className="text-xl font-semibold text-foreground">
+                        <p className="text-xl font-semibold text-foreground break-all">
                           {formatCurrency(result.phase.salary, language)}
                         </p>
                       </div>
@@ -120,27 +120,27 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                   </CardHeader>
                   <CardContent className="px-6 pb-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="p-4 bg-muted rounded-lg">
+                      <div className="p-4 bg-muted rounded-lg overflow-hidden">
                         <p className="text-xs text-muted-foreground mb-1">
                           {t("timeline.monthly.saved")}
                         </p>
-                        <p className="text-lg font-semibold text-foreground">
+                        <p className="text-base lg:text-lg font-semibold text-foreground break-all">
                           {formatCurrency(result.monthlySavings, language)}
                         </p>
                       </div>
-                      <div className="p-4 bg-muted rounded-lg">
+                      <div className="p-4 bg-muted rounded-lg overflow-hidden">
                         <p className="text-xs text-muted-foreground mb-1">
                           {t("timeline.total.saved")}
                         </p>
-                        <p className="text-lg font-semibold text-foreground">
+                        <p className="text-base lg:text-lg font-semibold text-foreground break-all">
                           {formatCurrency(result.totalSavedInPhase, language)}
                         </p>
                       </div>
-                      <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
+                      <div className="p-4 bg-primary/10 rounded-lg border border-primary/20 overflow-hidden">
                         <p className="text-xs text-muted-foreground mb-1">
                           {t("timeline.accumulated")}
                         </p>
-                        <p className="text-lg font-semibold text-primary">
+                        <p className="text-base lg:text-lg font-semibold text-primary break-all">
                           {formatCurrency(result.accumulatedAtEnd, language)}
                         </p>
                       </div>
