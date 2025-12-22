@@ -32,8 +32,7 @@ export function ResultsSummary({
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div 
-            className="p-6 bg-card rounded-lg border-2 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
-            style={{ borderColor: "#7BC04A" }}
+            className="p-6 bg-card rounded-lg border-2 border-primary shadow-sm hover:shadow-md transition-shadow overflow-hidden"
           >
             <p className="text-sm font-medium text-muted-foreground mb-3">
               {t("results.total.saved")}
@@ -43,13 +42,12 @@ export function ResultsSummary({
             </p>
           </div>
           <div 
-            className="p-6 bg-card rounded-lg border-2 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
-            style={{ borderColor: "#7BC04A" }}
+            className="p-6 bg-card rounded-lg border-2 border-primary shadow-sm hover:shadow-md transition-shadow overflow-hidden"
           >
             <p className="text-sm font-medium text-muted-foreground mb-3">
               {t("results.earned")}
             </p>
-            <p className="text-xl lg:text-2xl font-bold break-all" style={{ color: "#4A8A24" }}>
+            <p className="text-xl lg:text-2xl font-bold text-primary break-all">
               {formatCurrency(totalEarned, language)}
             </p>
           </div>
