@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Calculator, Download } from "lucide-react"
 import { generatePDF } from "@/lib/pdfGenerator"
 import { useLanguage } from "@/contexts/LanguageContext"
+import logo from "@/app/assets/devcapital-logo.png"
 
 type RateType = "annual" | "monthly"
 
@@ -118,12 +119,27 @@ export default function Home() {
     setCalculated(true)
   }
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
+    let logoBase64: string | undefined
+    try {
+      const response = await fetch(logo.src)
+      const blob = await response.blob()
+      logoBase64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onloadend = () => resolve(reader.result as string)
+        reader.onerror = reject
+        reader.readAsDataURL(blob)
+      })
+    } catch (error) {
+      console.error("Error Logo PDF:", error)
+    }
+
     const pdfData = {
       totalSaved,
       totalEarned,
       finalAmount,
       language,
+      logoBase64,
       phases: results.map((p) => ({
         name: p.phase.name,
         startYear: p.startYear,

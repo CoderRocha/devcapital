@@ -6,6 +6,7 @@ interface PDFData {
   totalEarned: number
   finalAmount: number
   language?: Language
+  logoBase64?: string
   phases?: Array<{
     name: string
     startYear: number
@@ -243,6 +244,13 @@ export function generatePDF(data: PDFData) {
   finalAmountLines.forEach((line, index) => {
     doc.text(line, card3X + 5, cardY + 20 + (index * 6))
   })
+
+  const logoY = pageHeight - 22
+  if (data.logoBase64) {
+      const logoWidth = 12
+      const logoHeight = 12
+      doc.addImage(data.logoBase64, "PNG", pageWidth / 2 - logoWidth / 2, logoY - logoHeight - 5, logoWidth, logoHeight)
+  }
 
   const footerY = pageHeight - 20
   doc.setFontSize(8)
