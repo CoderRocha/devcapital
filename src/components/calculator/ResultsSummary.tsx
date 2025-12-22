@@ -38,7 +38,7 @@ export function ResultsSummary({
             <p className="text-sm font-medium text-muted-foreground mb-3">
               {t("results.total.saved")}
             </p>
-            <p className="text-3xl font-bold text-primary">
+            <p className="text-2xl font-bold text-primary">
               {formatCurrency(totalSaved, language)}
             </p>
           </div>
@@ -49,7 +49,7 @@ export function ResultsSummary({
             <p className="text-sm font-medium text-muted-foreground mb-3">
               {t("results.earned")}
             </p>
-            <p className="text-3xl font-bold" style={{ color: "#4A8A24" }}>
+            <p className="text-2xl font-bold" style={{ color: "#4A8A24" }}>
               {formatCurrency(totalEarned, language)}
             </p>
           </div>
@@ -57,7 +57,7 @@ export function ResultsSummary({
             <p className="text-sm font-medium text-muted-foreground mb-3">
               {t("results.final.amount")}
             </p>
-            <p className="text-3xl font-bold text-primary">
+            <p className="text-2xl font-bold text-primary">
               {formatCurrency(finalAmount, language)}
             </p>
           </div>
