@@ -14,7 +14,7 @@ export const translations = {
   pt: {
     "app.title": "Dev Capital",
     "calculator.title": "Planeje seu Futuro Financeiro",
-    "calculator.subtitle": "Calcule quanto você pode acumular através das diferentes fases da sua carreira como desenvolvedor",
+    "calculator.subtitle": "Calcule quanto você pode acumular em cada fase da sua carreira como desenvolvedor",
     "interest.rate": "Taxa de Juros",
     "interest.rate.description": "Selecione o tipo e ajuste a taxa de juros",
     "interest.annual": "Anual",
@@ -56,7 +56,7 @@ export const translations = {
   en: {
     "app.title": "Dev Capital",
     "calculator.title": "Plan Your Financial Future",
-    "calculator.subtitle": "Calculate how much you can accumulate through the different phases of your career as a developer",
+    "calculator.subtitle": "Calculate how much you can accumulate at each stage of your career as a developer",
     "interest.rate": "Interest Rate",
     "interest.rate.description": "Select the type and adjust the interest rate",
     "interest.annual": "Annual",
