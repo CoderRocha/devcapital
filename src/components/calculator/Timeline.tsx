@@ -76,7 +76,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
           return (
             <Card
               key={index}
-              className="hover:shadow-lg transition-all duration-200 overflow-hidden border-l-4 p-0"
+              className="hover:shadow-lg transition-all duration-200 border-l-4 p-0"
               style={{ borderLeftColor: config.color }}
             >
               <div className="flex min-h-full">
@@ -84,7 +84,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                 {/* Barra colorida lateral com ícone */}
 
                 <div
-                  className="w-20 flex flex-col items-center justify-center p-4 text-white shrink-0"
+                  className="w-20 flex flex-col items-center justify-center p-4 text-white shrink-0 rounded-l-lg"
                   style={{ backgroundColor: config.color }}
                 >
                   <Icon className="size-8 mb-2" />
@@ -96,7 +96,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                 {/* Conteúdo do card */}
                 
                 <div className="flex-1">
-                  <CardHeader>
+                  <CardHeader className="px-6 py-6">
                     <div className="flex items-center justify-between flex-wrap gap-4">
                       <div>
                         <CardTitle className="text-xl mb-1">
@@ -118,7 +118,7 @@ export function Timeline({ phases = defaultPhases }: TimelineProps) {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-6 pb-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="p-4 bg-muted rounded-lg">
                         <p className="text-xs text-muted-foreground mb-1">
