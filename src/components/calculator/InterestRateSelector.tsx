@@ -69,7 +69,7 @@ export function InterestRateSelector({
             type="button"
             onClick={() => handleRateTypeChange("annual")}
             className={cn(
-              "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
+              "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer",
               rateType === "annual"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
@@ -81,7 +81,7 @@ export function InterestRateSelector({
             type="button"
             onClick={() => handleRateTypeChange("monthly")}
             className={cn(
-              "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
+              "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer",
               rateType === "monthly"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
@@ -108,7 +108,7 @@ export function InterestRateSelector({
             min={0}
             max={maxRate}
             step={step}
-            className="w-full"
+            className="w-full cursor-pointer"
           />
           <Input
             type="number"

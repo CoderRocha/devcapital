@@ -57,7 +57,7 @@ export function SavingsPercentageInput({
             min={0}
             max={50}
             step={5}
-            className="w-full"
+            className="w-full cursor-pointer"
           />
           <Input
             type="number"
