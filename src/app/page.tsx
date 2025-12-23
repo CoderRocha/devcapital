@@ -256,7 +256,28 @@ export default function Home() {
                 <div className="text-center px-4">
                   <Calculator className="size-8 sm:size-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
                   <p className="text-sm sm:text-base lg:text-lg font-medium text-muted-foreground">
-                    {t("placeholder.message")}
+                    {(() => {
+                      const message = t("placeholder.message")
+                      if (language === "pt") {
+                        const parts = message.split("'Calcular'")
+                        return (
+                          <>
+                            {parts[0]}'
+                            <span className="text-primary">Calcular</span>'
+                            {parts[1]}
+                          </>
+                        )
+                      } else {
+                        const parts = message.split("'Calculate'")
+                        return (
+                          <>
+                            {parts[0]}'
+                            <span className="text-primary">Calculate</span>'
+                            {parts[1]}
+                          </>
+                        )
+                      }
+                    })()}
                   </p>
                 </div>
               </div>

@@ -11,7 +11,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center gap-1.5 sm:gap-2 text-center">
           <p className="text-xs sm:text-sm font-semibold text-foreground">
-            Dev Capital
+            Dev <span className="text-primary">Capital</span>
           </p>
           <p className="text-[10px] sm:text-xs text-muted-foreground px-2">
             {t("footer.copyright", { year: currentYear })}

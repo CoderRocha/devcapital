@@ -25,7 +25,7 @@ export function Header() {
           className="object-contain w-8 h-8 sm:w-10 sm:h-10"
         />
         <div className="text-base sm:text-lg font-semibold text-foreground">
-          Dev Capital
+          Dev <span className="text-primary">Capital</span>
         </div>
       </button>
       <div className="flex items-center gap-2 sm:gap-3">
