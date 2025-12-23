@@ -193,7 +193,8 @@ export function generatePDF(data: PDFData) {
   doc.setFontSize(10)
   doc.setTextColor(100, 100, 100)
   doc.setFont("helvetica", "normal")
-  doc.text(t("results.total.saved"), margin + 5, cardY + 8)
+  const totalSavedLabel = `${t("results.total.saved")} ${t("results.total.saved.with.deposit")}`
+  doc.text(totalSavedLabel, margin + 5, cardY + 8)
 
   doc.setFontSize(14)
   doc.setTextColor(primaryColor)

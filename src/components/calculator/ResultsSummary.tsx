@@ -35,7 +35,7 @@ export function ResultsSummary({
             className="p-4 sm:p-6 bg-card rounded-lg border-2 border-primary shadow-sm hover:shadow-md transition-shadow overflow-hidden"
           >
             <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-2 sm:mb-3">
-              {t("results.total.saved")}
+              {t("results.total.saved")} <span className="text-xs">{t("results.total.saved.with.deposit")}</span>
             </p>
             <p className="text-lg sm:text-xl lg:text-2xl font-bold text-primary break-all">
               {formatCurrency(totalSaved, language)}
