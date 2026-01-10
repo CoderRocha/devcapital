@@ -6,7 +6,6 @@ import { Footer } from "@/components/layout/Footer"
 import { CalculatorHeader } from "@/components/calculator/CalculatorHeader"
 import { InterestRateSelector } from "@/components/calculator/InterestRateSelector"
 import { InitialDepositInput } from "@/components/calculator/InitialDepositInput"
-import { SavingsPercentageInput } from "@/components/calculator/SavingsPercentageInput"
 import { CareerPhasesConfig, type CareerPhase } from "@/components/calculator/CareerPhasesConfig"
 import { ResultsSummary } from "@/components/calculator/ResultsSummary"
 import { Timeline } from "@/components/calculator/Timeline"
@@ -32,14 +31,13 @@ export default function Home() {
   const [rateType, setRateType] = useState<RateType>("annual")
   const [interestRate, setInterestRate] = useState(10)
   const [initialDeposit, setInitialDeposit] = useState(0)
-  const [savingsPercentage, setSavingsPercentage] = useState(30)
   const [calculated, setCalculated] = useState(false)
 
   const [phases, setPhases] = useState<CareerPhase[]>([
-    { name: "Júnior", salary: 4500, years: 2, color: "bg-onp-green-light" },
-    { name: "Pleno", salary: 8000, years: 3, color: "bg-primary" },
-    { name: "Sênior", salary: 14000, years: 4, color: "bg-onp-green-dark" },
-    { name: "Líder", salary: 17000, years: 5, color: "bg-onp-green-darker" },
+    { name: "Júnior", salary: 4500, years: 2, color: "bg-onp-green-light", savingsPercentage: 30 },
+    { name: "Pleno", salary: 8000, years: 3, color: "bg-primary", savingsPercentage: 30 },
+    { name: "Sênior", salary: 14000, years: 4, color: "bg-onp-green-dark", savingsPercentage: 30 },
+    { name: "Líder", salary: 17000, years: 5, color: "bg-onp-green-darker", savingsPercentage: 30 },
   ])
 
   const handlePhaseChange = (
@@ -83,7 +81,7 @@ export default function Home() {
       : interestRate / 100
 
     phases.forEach((phase) => {
-      const monthlySavings = (phase.salary * savingsPercentage) / 100
+      const monthlySavings = (phase.salary * phase.savingsPercentage) / 100
       const months = phase.years * 12
       
       // Calcular quanto foi guardado nesta fase (sem juros)
@@ -110,7 +108,7 @@ export default function Home() {
     })
 
     return phaseResults
-  }, [phases, interestRate, savingsPercentage, rateType, calculated, initialDeposit])
+  }, [phases, interestRate, rateType, calculated, initialDeposit])
 
   const totalSaved = initialDeposit + results.reduce((sum, r) => sum + r.totalSavedInPhase, 0)
   const finalAmount = results[results.length - 1]?.accumulatedAtEnd || 0
@@ -191,16 +189,6 @@ export default function Home() {
             </div>
 
             <div className="animate-fade-in-up-delay-2">
-              <SavingsPercentageInput
-                savingsPercentage={savingsPercentage}
-                onSavingsPercentageChange={(percentage) => {
-                  setSavingsPercentage(percentage)
-                  setCalculated(false)
-                }}
-              />
-            </div>
-
-            <div className="animate-fade-in-up-delay-3">
               <CareerPhasesConfig
                 phases={phases}
                 onPhaseChange={handlePhaseChange}

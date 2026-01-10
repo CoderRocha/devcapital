@@ -3,13 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { GraduationCap, Briefcase, Award, Crown } from "lucide-react"
 import { useLanguage, translatePhaseName } from "@/contexts/LanguageContext"
-
-interface CareerPhase {
-  name: string
-  salary: number
-  years: number
-  color: string
-}
+import { type CareerPhase } from "./CareerPhasesConfig"
 
 interface PhaseCardProps {
   phase: CareerPhase
@@ -103,6 +97,23 @@ export function PhaseCard({
             disabled={!isEditable}
             min={1}
             step={1}
+            className="text-base"
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-xs font-medium text-muted-foreground">
+            {t("phase.savings.percentage")}
+          </label>
+          <Input
+            type="number"
+            value={phase.savingsPercentage}
+            onChange={(e) =>
+              onPhaseChange?.(index, "savingsPercentage", Number(e.target.value))
+            }
+            disabled={!isEditable}
+            min={0}
+            max={50}
+            step={5}
             className="text-base"
           />
         </div>
