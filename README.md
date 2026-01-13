@@ -28,7 +28,7 @@ Foi utilizada uma paleta de cores verde, com a cor primária sendo o tom de verd
 
 ## Funcionalidades
 
-### 🧮 Calculadora de Juros Compostos
+### Calculadora de Juros Compostos
 
 O **Dev Capital** possui as seguintes funcionalidades:
 
